@@ -1,0 +1,30 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb-base"
+  ],
+  "rules": {
+    "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
+    "no-plusplus": "off",
+    "no-console": "warn",
+    "max-len": [
+      "warn",
+      {
+        "code": 180
+      }
+    ],
+    "indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "class-methods-use-this": "off",
+    "import/extensions": ["error", "always"]
+  }
+}

@@ -1,0 +1,31 @@
+.button {
+  border-radius: 10px;
+  box-shadow: -5px -5px 5px rgba(255, 255, 255, 0.1), 5px 5px 9px rgba(0, 0, 0, 0.5);
+  height: 40px;
+  width: 60px;
+  background: #2D3134;
+  margin: 20px;
+
+  border: 1px solid #2D3134;
+
+
+  color: #22272E;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.1s ease 0s;
+}
+
+.button:active {
+  box-shadow: -5px -5px 5px rgba(255, 255, 255, 0.1),
+  5px 5px 9px rgba(0, 0, 0, 0.5),
+  inset -5px -5px 5px rgba(255, 255, 255, 0.1), inset 5px 5px 9px rgba(0, 0, 0, 0.6);
+  transition: all 0.1s ease 0s;
+}
+
+.button img {
+  height: 100%;
+}
+
+.button:active img {
+  transform: translate(0.5px, 0.5px) scale(0.94);
+}
