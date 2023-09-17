@@ -35,7 +35,6 @@ export default class Player extends View {
     player.append(new Button(typeButton.play).getHtmlElement());
     player.append(new Button(typeButton.pause).getHtmlElement());
     player.append(new Range().getHtmlElement());
-    // player.append(new RangeTest().getHtmlElement());
   }
 
   toggleImgButton() {
