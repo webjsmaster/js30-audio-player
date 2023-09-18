@@ -1,7 +1,7 @@
 import './poster.scss';
-import View from '../../../util/view.js';
-import { content } from '../../../util/variables.js';
-import ElementCreator from '../../../util/element-creator.js';
+import View from '../../../../util/view.js';
+import { content } from '../../../../util/variables.js';
+import ElementCreator from '../../../../util/element-creator.js';
 import Player from '../player/player.js';
 
 export default class Poster extends View {

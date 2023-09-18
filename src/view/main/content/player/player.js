@@ -1,11 +1,11 @@
 import './player.scss';
-import View from '../../../util/view.js';
+import View from '../../../../util/view.js';
 import Button from './button/button.js';
-import { content, typeButton } from '../../../util/variables.js';
+import { content, typeButton } from '../../../../util/variables.js';
 import Range from './range/range.js';
 
-import ElementCreator from '../../../util/element-creator.js';
-import getTimeCodeFromNum from '../../../util/get-time.js';
+import ElementCreator from '../../../../util/element-creator.js';
+import getTimeCodeFromNum from '../../../../util/get-time.js';
 
 export default class Player extends View {
   _currentTrack = 0;

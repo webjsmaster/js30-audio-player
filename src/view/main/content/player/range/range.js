@@ -1,6 +1,6 @@
 import './range.scss';
-import View from '../../../../util/view.js';
-import ElementCreator from '../../../../util/element-creator.js';
+import View from '../../../../../util/view.js';
+import ElementCreator from '../../../../../util/element-creator.js';
 import Player from '../player.js';
 
 export default class Range extends View {

@@ -1,12 +1,12 @@
 import './content.scss';
-import View from '../../util/view.js';
+import View from '../../../util/view.js';
 import Player from './player/player.js';
 import Poster from './poster/poster.js';
 
 export default class Content extends View {
   constructor() {
     /**
-     * @type {import('../../util/element-creator.js').ElementParams} params
+     * @type {import('../../../util/element-creator.js').ElementParams} params
      */
     const params = {
       tag: 'div',

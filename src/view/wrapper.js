@@ -1,6 +1,7 @@
 import './wrapper.scss';
 import View from '../util/view.js';
-import Content from './content/content.js';
+import Footer from './footer/footer.js';
+import Main from './main/main.js';
 
 export default class Wrapper extends View {
   constructor() {
@@ -19,6 +20,6 @@ export default class Wrapper extends View {
 
   configureView() {
     const wrapper = this.elementCreator.getElement();
-    wrapper.append(new Content().getHtmlElement());
+    wrapper.append(new Main().getHtmlElement(), new Footer().getHtmlElement());
   }
 }

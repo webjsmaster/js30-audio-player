@@ -1,7 +1,7 @@
 import './button.scss';
-import View from '../../../../util/view.js';
-import ElementCreator from '../../../../util/element-creator.js';
-import { buttonImg, typeButton } from '../../../../util/variables.js';
+import View from '../../../../../util/view.js';
+import ElementCreator from '../../../../../util/element-creator.js';
+import { buttonImg, typeButton } from '../../../../../util/variables.js';
 import Player from '../player.js';
 
 export default class Button extends View {
