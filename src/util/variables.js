@@ -1,6 +1,9 @@
 import playImg from '../public/play2.png';
 import pauseImg from '../public/pause2.png';
 import arrowRightImg from '../public/arrowR1.png';
+import arrowLeftImg from '../public/arrowL1.png';
+import audio1 from '../public/Vandelux-Tulum.mp3';
+import audio2 from '../public/Meute-Holy-harbour.mp3';
 
 /**
  * @typedef {{
@@ -25,8 +28,10 @@ const typeButton = {
 const buttonImg = {
   play: playImg,
   pause: pauseImg,
-  arrowLeft: 'arrowLeft',
+  arrowLeft: arrowLeftImg,
   arrowRight: arrowRightImg,
 };
 
-export { typeButton, buttonImg };
+export {
+  typeButton, buttonImg, audio1, audio2,
+};

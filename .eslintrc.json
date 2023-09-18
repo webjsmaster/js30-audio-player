@@ -9,14 +9,16 @@
   "rules": {
     "no-param-reassign": "off",
     "import/prefer-default-export": "off",
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
     "no-plusplus": "off",
     "no-console": "warn",
-    "max-len": [
-      "warn",
-      {
-        "code": 180
-      }
-    ],
+//    "max-len": [
+//      "warn",
+//      {
+//        "code": 700
+//      }
+//    ],
     "indent": [
       "warn",
       2,
@@ -25,6 +27,9 @@
       }
     ],
     "class-methods-use-this": "off",
-    "import/extensions": ["error", "always"]
+    "import/extensions": [
+      "error",
+      "always"
+    ]
   }
 }

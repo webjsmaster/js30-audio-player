@@ -2,8 +2,8 @@
  * @typedef {{
  * tag: string,
  * classNames: Array<string>,
- * textContent: string,
- * callback: Function,
+ * textContent?: string,
+ * callback?: Function,
  * attribute?: Array<{id: string, value: string}>,
  * }} ElementParams
  */

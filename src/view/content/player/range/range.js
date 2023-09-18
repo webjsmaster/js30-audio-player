@@ -1,9 +1,10 @@
 import './range.scss';
 import View from '../../../../util/view.js';
 import ElementCreator from '../../../../util/element-creator.js';
+import Player from '../player.js';
 
 export default class Range extends View {
-  constructor() {
+  constructor(duration) {
     /**
      * @type {import('../../util/element-creator.js').ElementParams} params
      */
@@ -14,13 +15,17 @@ export default class Range extends View {
       callback: null,
     };
     super(params);
+    this.player = new Player();
     this.range = null;
     this.rangeRight = null;
-    this.configureView();
+    this.configureView(duration);
     this.updatePos();
   }
 
-  configureView() {
+  configureView(duration) {
+    const maxTime = duration || 500;
+
+    console.log('[28] 🌻: ', maxTime);
     /**
      * @type {import('../../util/element-creator.js').ElementParams} params
      */
@@ -40,7 +45,7 @@ export default class Range extends View {
         value: '0',
       }, {
         id: 'max',
-        value: '99',
+        value: maxTime,
       }, {
         id: 'value',
         value: '0',
@@ -84,9 +89,16 @@ export default class Range extends View {
     rangeLine.append(rangeLineL, this.rangeRight);
     this.range = new ElementCreator(params).getElement();
     this.range.addEventListener('input', () => {
+      this.player.audio.currentTime = this.range.value;
       this.updatePos();
     });
     rangeBlock.append(this.range, rangeLine);
+  }
+
+  setValueRange(value) {
+    if (value !== 'NaN') {
+      this.range.value = value;
+    }
   }
 
   getRangePercent() {

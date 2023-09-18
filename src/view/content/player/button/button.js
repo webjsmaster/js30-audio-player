@@ -2,7 +2,6 @@ import './button.scss';
 import View from '../../../../util/view.js';
 import ElementCreator from '../../../../util/element-creator.js';
 import { buttonImg, typeButton } from '../../../../util/variables.js';
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
 import Player from '../player.js';
 
 export default class Button extends View {
@@ -24,6 +23,7 @@ export default class Button extends View {
       callback: () => this.handlerButton(),
     };
     super(params);
+    this.player = new Player();
     this.configureView(type);
   }
 
@@ -56,7 +56,10 @@ export default class Button extends View {
     const idButton = this.getHtmlElement()
       .getAttribute('id');
     if (idButton === typeButton.play || idButton === typeButton.pause) {
-      Player.setStatus(!Player.getStatus());
+      this.player.toggleStatus();
+      this.player.updateView();
+    } else if (idButton === typeButton.arrowRight || idButton === typeButton.arrowLeft) {
+      this.player.changeTrack(idButton);
     }
   }
 }

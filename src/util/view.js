@@ -5,14 +5,12 @@
  * }} ViewParams
  */
 import ElementCreator from './element-creator.js';
-import { Observer } from './observer.js';
 
-export default class View extends Observer {
+export default class View {
   /**
    * @param {import('./element-creator').ElementParams} params
    */
   constructor(params) {
-    super();
     this.elementCreator = this.createView(params);
   }
 
