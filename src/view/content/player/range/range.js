@@ -24,8 +24,6 @@ export default class Range extends View {
 
   configureView(duration) {
     const maxTime = duration || 500;
-
-    console.log('[28] 🌻: ', maxTime);
     /**
      * @type {import('../../util/element-creator.js').ElementParams} params
      */

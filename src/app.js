@@ -1,4 +1,6 @@
 import Wrapper from './view/wrapper.js';
+import Poster from './view/content/poster/poster';
+import Player from './view/content/player/player';
 
 export default class App {
   constructor() {
@@ -11,3 +13,7 @@ export default class App {
     this.body.append(content.getHtmlElement());
   }
 }
+
+const poster = new Poster();
+const player = new Player();
+player.subscribe(poster);

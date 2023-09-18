@@ -1,14 +1,14 @@
 import './player.scss';
 import View from '../../../util/view.js';
 import Button from './button/button.js';
-import { audio1, audio2, typeButton } from '../../../util/variables.js';
+import { content, typeButton } from '../../../util/variables.js';
 import Range from './range/range.js';
 
 import ElementCreator from '../../../util/element-creator.js';
 import getTimeCodeFromNum from '../../../util/get-time.js';
 
 export default class Player extends View {
-  _currentTrack = 1;
+  _currentTrack = 0;
   _isPlay = false;
 
   constructor() {
@@ -23,6 +23,8 @@ export default class Player extends View {
     };
     super(params);
 
+    this.observers = [];
+
     // ======== > singleton < ======== //
     if (Player.exists) {
       return Player.instance;
@@ -31,7 +33,7 @@ export default class Player extends View {
     Player.exists = true;
     // ======== > singleton < ======== //
 
-    this.tracks = [audio1, audio2];
+    this.content = content;
     this.configureAudio();
     this.configureView();
   }
@@ -42,16 +44,14 @@ export default class Player extends View {
 
   configureAudio() {
     this.audio = new Audio();
-    this.audio.src = this.tracks[this._currentTrack];
+    this.audio.src = this.content[this._currentTrack].audio;
 
 
     this.audio.addEventListener(
       'loadeddata',
       () => {
         this.configureView();
-        this.name.textContent = this.tracks[this._currentTrack].split('/')
-          .pop()
-          .split('.')[0];
+        this.name.textContent = this.content[this._currentTrack].name;
         this.lengthTime.textContent = getTimeCodeFromNum(this.audio.duration);
       },
       false
@@ -120,8 +120,32 @@ export default class Player extends View {
   changeTrack(direction) {
     this.audio.pause();
     this.audio = null;
-    this._currentTrack = this._currentTrack === 0 ? 1 : 0;
+
+    if (direction === typeButton.arrowLeft) {
+      this._currentTrack = this._currentTrack === 0 ? this.content.length - 1 : this._currentTrack - 1;
+    } else if (direction === typeButton.arrowRight) {
+      this._currentTrack = this._currentTrack === this.content.length - 1 ? 0 : this._currentTrack + 1;
+    }
+
+    this.notifyObserver();
     this.configureAudio();
     this._isPlay ? this.audio.play() : this.audio.pause();
   }
+
+  getCurrentTrack() {
+    return this._currentTrack;
+  }
+
+
+  // =======> Observer <======== //
+  subscribe(observer) {
+    this.observers.push(observer);
+  }
+
+  notifyObserver() {
+    this.observers.forEach(o => o.update());
+  }
+
+  // =======> Observer <======== //
 }
+
