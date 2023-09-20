@@ -35,7 +35,7 @@ export default class Player extends View {
 
     this.content = content;
     this.configureAudio();
-    this.configureView();
+    // this.configureView();
   }
 
   getStatus() {
@@ -53,6 +53,9 @@ export default class Player extends View {
         this.configureView();
         this.name.textContent = this.content[this._currentTrack].name;
         this.lengthTime.textContent = getTimeCodeFromNum(this.audio.duration);
+
+        console.log( '🍁: ', getTimeCodeFromNum(this.audio.duration) )
+
       },
       false
     );
