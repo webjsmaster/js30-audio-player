@@ -1,0 +1,19 @@
+.footer__school {
+  width: 150px;
+  height: 80px;
+}
+
+.footer__school img {
+  width: 100%;
+  height: 100%;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+  transform: scale(0.9);
+  transition: all 0.3s linear;
+}
+
+
+.footer__school:hover img {
+  transition: all 0.3s linear;
+  transform: scale(1);
+
+}

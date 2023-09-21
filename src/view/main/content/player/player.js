@@ -1,15 +1,17 @@
 import './player.scss';
 import View from '../../../../util/view.js';
 import Button from './button/button.js';
-import { content, typeButton } from '../../../../util/variables.js';
+import {content, typeButton} from '../../../../util/variables.js';
 import Range from './range/range.js';
 
 import ElementCreator from '../../../../util/element-creator.js';
 import getTimeCodeFromNum from '../../../../util/get-time.js';
+import Preloader from "../../../preloader/preloader";
 
 export default class Player extends View {
   _currentTrack = 0;
   _isPlay = false;
+  _isLoading = false;
 
   constructor() {
     /**
@@ -35,7 +37,7 @@ export default class Player extends View {
 
     this.content = content;
     this.configureAudio();
-    // this.configureView();
+
   }
 
   getStatus() {
@@ -45,25 +47,32 @@ export default class Player extends View {
   configureAudio() {
     this.audio = new Audio();
     this.audio.src = this.content[this._currentTrack].audio;
-
+    this.setStatusLoading(true);
+    this.configureView()
 
     this.audio.addEventListener(
       'loadeddata',
       () => {
+        this.setStatusLoading(false);
         this.configureView();
         this.name.textContent = this.content[this._currentTrack].name;
         this.lengthTime.textContent = getTimeCodeFromNum(this.audio.duration);
 
-        console.log( '🍁: ', getTimeCodeFromNum(this.audio.duration) )
+        setInterval(() => {
+          this.range.setValueRange(this.audio.currentTime);
+          this.range.updatePos();
+          this.currentTime.textContent = getTimeCodeFromNum(this.audio.currentTime);
+        }, 500);
+
+        console.log('🍁: ', getTimeCodeFromNum(this.audio.duration))
 
       },
       false
     );
-    setInterval(() => {
-      this.range.setValueRange(this.audio.currentTime);
-      this.range.updatePos();
-      this.currentTime.textContent = getTimeCodeFromNum(this.audio.currentTime);
-    }, 500);
+
+    this.audio.addEventListener('ended', () => {
+      this.changeTrack(typeButton.arrowRight)
+    })
   }
 
   toggleStatus() {
@@ -102,7 +111,11 @@ export default class Player extends View {
 
     this.currentTime.textContent = getTimeCodeFromNum(this.audio.currentTime);
     time.append(this.currentTime, this.name, this.lengthTime);
-    player.append(this.playButton, time, this.range.getHtmlElement(), this.leftButton, this.rightButton);
+    if (this._isLoading) {
+      player.append(new Preloader().getHtmlElement());
+    } else {
+      player.append(this.playButton, time, this.range.getHtmlElement(), this.leftButton, this.rightButton);
+    }
   }
 
   updateView() {
@@ -139,6 +152,13 @@ export default class Player extends View {
     return this._currentTrack;
   }
 
+  setStatusLoading(status) {
+    this._isLoading = status
+  }
+
+  getStatusLoading() {
+    return this._isLoading;
+  }
 
   // =======> Observer <======== //
   subscribe(observer) {
