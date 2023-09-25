@@ -13,12 +13,12 @@
     "import/no-named-as-default-member": 0,
     "no-plusplus": "off",
     "no-console": "warn",
-//    "max-len": [
-//      "warn",
-//      {
-//        "code": 700
-//      }
-//    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 700
+      }
+    ],
     "indent": [
       "warn",
       2,

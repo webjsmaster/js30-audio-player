@@ -1,12 +1,15 @@
 .preloader {
-  height: 50px;
-  left: 50%;
+  min-height: 100%;
+
   color: red;
   font-size: 60px;
-  position: absolute;
-  top: 50%;
-  transform: translate(-40%, 50%);
-  width: 250px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transform: translateY(5px);
+
 
   &__bar {
     background-color: #69c98c;

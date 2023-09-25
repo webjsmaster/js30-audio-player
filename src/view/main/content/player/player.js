@@ -6,7 +6,7 @@ import Range from './range/range.js';
 
 import ElementCreator from '../../../../util/element-creator.js';
 import getTimeCodeFromNum from '../../../../util/get-time.js';
-import Preloader from "../../../preloader/preloader";
+import Preloader from '../../../preloader/preloader';
 
 export default class Player extends View {
   _currentTrack = 0;
@@ -36,8 +36,27 @@ export default class Player extends View {
     // ======== > singleton < ======== //
 
     this.content = content;
-    this.configureAudio();
 
+    this.createAllHtmlElements();
+    this.configureAudio();
+    this.configureView();
+
+  }
+
+  createAllHtmlElements() {
+    this.playButton = new Button(typeButton.play).getHtmlElement();
+    this.leftButton = new Button(typeButton.arrowLeft).getHtmlElement();
+    this.rightButton = new Button(typeButton.arrowRight).getHtmlElement();
+    this.loader = new Preloader().getHtmlElement();
+    this.range = new Range();
+    this.infoContainer = new ElementCreator({tag: 'div', classNames: ['player__container']}).getElement();
+
+    this.info = new ElementCreator({tag: 'div', classNames: ['time']}).getElement();
+    this.currentTime = new ElementCreator({tag: 'div', classNames: ['time__current']}).getElement();
+    this.name = new ElementCreator({tag: 'div', classNames: ['time__name']}).getElement();
+    this.lengthTime = new ElementCreator({tag: 'div', classNames: ['time__length']}).getElement();
+
+    this.info.append(this.currentTime, this.name, this.lengthTime);
   }
 
   getStatus() {
@@ -48,15 +67,15 @@ export default class Player extends View {
     this.audio = new Audio();
     this.audio.src = this.content[this._currentTrack].audio;
     this.setStatusLoading(true);
-    this.configureView()
+    this.rerenderView();
 
     this.audio.addEventListener(
       'loadeddata',
       () => {
         this.setStatusLoading(false);
-        this.configureView();
-        this.name.textContent = this.content[this._currentTrack].name;
-        this.lengthTime.textContent = getTimeCodeFromNum(this.audio.duration);
+        // this.configureView();
+        this.rerenderView();
+        this.range.setMaxAttr(this.audio.duration);
 
         setInterval(() => {
           this.range.setValueRange(this.audio.currentTime);
@@ -64,73 +83,33 @@ export default class Player extends View {
           this.currentTime.textContent = getTimeCodeFromNum(this.audio.currentTime);
         }, 500);
 
-        console.log('🍁: ', getTimeCodeFromNum(this.audio.duration))
 
       },
       false
     );
 
     this.audio.addEventListener('ended', () => {
-      this.changeTrack(typeButton.arrowRight)
-    })
+      this.changeTrack(typeButton.arrowRight);
+    });
   }
 
-  toggleStatus() {
-    this._isPlay = !this._isPlay;
-    this._isPlay ? this.audio.play() : this.audio.pause();
-  }
 
   configureView() {
     const player = this.elementCreator.getElement();
-    player.replaceChildren();
-    this.playButton = null;
-    if (this._isPlay) {
-      this.playButton = new Button(typeButton.pause).getHtmlElement();
-    } else {
-      this.playButton = new Button(typeButton.play).getHtmlElement();
-    }
-    this.leftButton = new Button(typeButton.arrowLeft).getHtmlElement();
-    this.rightButton = new Button(typeButton.arrowRight).getHtmlElement();
-    this.range = new Range(this.audio.duration);
-    const time = new ElementCreator({
-      tag: 'div',
-      classNames: ['time'],
-    }).getElement();
-    this.currentTime = new ElementCreator({
-      tag: 'div',
-      classNames: ['time__current'],
-    }).getElement();
-    this.name = new ElementCreator({
-      tag: 'div',
-      classNames: ['time__name'],
-    }).getElement();
-    this.lengthTime = new ElementCreator({
-      tag: 'div',
-      classNames: ['time__length'],
-    }).getElement();
-
-    this.currentTime.textContent = getTimeCodeFromNum(this.audio.currentTime);
-    time.append(this.currentTime, this.name, this.lengthTime);
-    if (this._isLoading) {
-      player.append(new Preloader().getHtmlElement());
-    } else {
-      player.append(this.playButton, time, this.range.getHtmlElement(), this.leftButton, this.rightButton);
-    }
+    player.append(this.playButton, this.infoContainer, this.range.getHtmlElement(), this.leftButton, this.rightButton);
   }
 
-  updateView() {
-    const player = this.elementCreator.getElement();
-    player.removeChild(this.playButton);
-    if (this._isPlay) {
-      this.playButton = new Button(typeButton.pause).getHtmlElement();
+  rerenderView() {
+    this.infoContainer.replaceChildren();
+    if (this.getStatusLoading()) {
+      this.infoContainer.append(this.loader)
     } else {
-      this.playButton = new Button(typeButton.play).getHtmlElement();
+      this.currentTime.textContent = getTimeCodeFromNum(this.audio.currentTime);
+      this.lengthTime.textContent = getTimeCodeFromNum(this.audio.duration);
+      this.name.textContent = this.content[this._currentTrack].name;
+
+      this.infoContainer.append(this.info)
     }
-    player.prepend(this.playButton);
-    this.range.setValueRange(this.audio.currentTime);
-    this.range.updatePos();
-    this.currentTime.textContent = getTimeCodeFromNum(this.audio.currentTime);
-    this.lengthTime.textContent = getTimeCodeFromNum(this.audio.duration);
   }
 
   changeTrack(direction) {
@@ -148,12 +127,17 @@ export default class Player extends View {
     this._isPlay ? this.audio.play() : this.audio.pause();
   }
 
+  toggleStatus() {
+    this._isPlay = !this._isPlay;
+    this._isPlay ? this.audio.play() : this.audio.pause();
+  }
+
   getCurrentTrack() {
     return this._currentTrack;
   }
 
   setStatusLoading(status) {
-    this._isLoading = status
+    this._isLoading = status;
   }
 
   getStatusLoading() {

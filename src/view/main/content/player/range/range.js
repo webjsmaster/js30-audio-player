@@ -4,7 +4,7 @@ import ElementCreator from '../../../../../util/element-creator.js';
 import Player from '../player.js';
 
 export default class Range extends View {
-  constructor(duration) {
+  constructor() {
     /**
      * @type {import('../../util/element-creator.js').ElementParams} params
      */
@@ -18,15 +18,11 @@ export default class Range extends View {
     this.player = new Player();
     this.range = null;
     this.rangeRight = null;
-    this.configureView(duration);
+    this.configureView();
     this.updatePos();
   }
 
-  configureView(duration) {
-
-    console.log( '⭐: ', duration )
-
-    const maxTime = duration;
+  configureView() {
     /**
      * @type {import('../../util/element-creator.js').ElementParams} params
      */
@@ -46,7 +42,7 @@ export default class Range extends View {
         value: '0',
       }, {
         id: 'max',
-        value: maxTime,
+        value: 500,
       }, {
         id: 'value',
         value: '0',
@@ -97,9 +93,11 @@ export default class Range extends View {
   }
 
   setValueRange(value) {
-    if (value !== 'NaN') {
-      this.range.value = value;
-    }
+    this.range.value = value;
+  }
+
+  setMaxAttr(value) {
+    this.range.setAttribute('max', value);
   }
 
   getRangePercent() {

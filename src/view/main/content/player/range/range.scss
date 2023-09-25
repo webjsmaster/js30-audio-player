@@ -10,6 +10,7 @@
   appearance: none;
   background-color: transparent;
   z-index: 1;
+  cursor: pointer;
 }
 
 
@@ -31,7 +32,6 @@
   transform: translateY(-35%);
   z-index: 1;
   position: relative;
-
   border: 3px solid white;
 }
 
@@ -59,7 +59,7 @@
   height: 100%;
   border-radius: 4px;
   background-color: #26cddd;
-  box-shadow: -5px -5px 5px rgba(255, 255, 255, 0), 5px 5px 9px rgba(0, 0, 0, 0.3),
+  box-shadow: -5px -5px 5px rgba(255, 255, 255, 0), 5px 5px 9px rgba(0, 0, 0, 0.3);
 }
 
 .range-line-right {

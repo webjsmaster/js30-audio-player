@@ -28,14 +28,12 @@ export default class Button extends View {
   }
 
   configureView(type) {
-    this.elementCreator.getElement()
-      .append(this.insertImg(type)
-        .getElement());
+    this.img = this.insertImg(type).getElement();
+    this.elementCreator.getElement().append(this.img);
   }
 
   insertImg(type) {
     const img = buttonImg[type];
-
     /**
      * @type {import('../../util/element-creator.js').ElementParams} params
      */
@@ -57,9 +55,17 @@ export default class Button extends View {
       .getAttribute('id');
     if (idButton === typeButton.play || idButton === typeButton.pause) {
       this.player.toggleStatus();
-      this.player.updateView();
+      this.toggleImgButton();
     } else if (idButton === typeButton.arrowRight || idButton === typeButton.arrowLeft) {
       this.player.changeTrack(idButton);
+    }
+  }
+
+  toggleImgButton() {
+    if (this.player.getStatus()) {
+      this.img.setAttribute('src', buttonImg.pause);
+    } else {
+      this.img.setAttribute('src', buttonImg.play);
     }
   }
 }
