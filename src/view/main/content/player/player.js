@@ -68,12 +68,13 @@ export default class Player extends View {
     this.audio.src = this.content[this._currentTrack].audio;
     this.setStatusLoading(true);
     this.rerenderView();
+    this.playButton.disabled = true;
 
     this.audio.addEventListener(
       'loadeddata',
       () => {
         this.setStatusLoading(false);
-        // this.configureView();
+        this.playButton.disabled = false;
         this.rerenderView();
         this.range.setMaxAttr(this.audio.duration);
 
